@@ -47,6 +47,134 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Spark &amp; Yarn配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T13:25:42.101Z" itemprop="datePublished">2022-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="title-Spark-HA-amp-Yarn-配置"><a href="#title-Spark-HA-amp-Yarn-配置" class="headerlink" title="title:Spark HA&amp; Yarn 配置"></a>title:Spark HA&amp; Yarn 配置</h2><p>修改spark-env.sh配置文件,删除<code>SPARK_MASTER_HOST=node1</code>不固定master节点 。将spark-env.sh分发到node2和node3</p>
+<p>scp spark-env.sh node2:&#x2F;export&#x2F;server&#x2F;spark&#x2F;conf&#x2F;</p>
+<p>scp spark-env.sh node3:&#x2F;export&#x2F;server&#x2F;spark&#x2F;conf&#x2F;，关闭当前StandAlone集群(之前需开启配置完成的zookeeper)在node1上 启动一个master 和全部worker，cd &#x2F;export&#x2F;server&#x2F;spark&#x2F;sbin&#x2F;start-all.sh</p>
+<p><img src="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/Users\柒柒\AppData\Roaming\Typora\typora-user-images\1653744911567.png" alt="1653744911567"></p>
+<p>查看状态：node1:8080端口状态为ALIVE，关闭node1的master进程，node2master启用其状态切换为ALIVE</p>
+<p>保证 HADOOP_CONF_和 DIR_YARN_CONF_DIR 已经配置在 spark-env.sh 和环境变量中</p>
+<p> 链接到YARN中（注: 交互式环境 pyspark 和 spark-shell 无法运行 cluster模式）</p>
+<p><em><strong>*client*</strong></em> <em><strong>*模式测试*</strong></em> </p>
+<h6 id><a href="#" class="headerlink" title></a><img src="/../images/37.png" alt="在这里插入图片描述"></h6><p><em><strong>*cluster 模式测试*</strong></em></p>
+<p><img src="/../images/38.png" alt="在这里插入图片描述"></p>
+<p><em><strong>*通过web UI查看任务运行状态*</strong></em></p>
+<p><img src="/../images/39.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/40.png" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/" data-id="cl3pxjjtv0000ycty4ail5faz" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Spark local&amp; stand-alone配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T12:19:40.953Z" itemprop="datePublished">2022-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="title-Spark-local-amp-stand-alone配置"><a href="#title-Spark-local-amp-stand-alone配置" class="headerlink" title="title:Spark local&amp; stand-alone配置"></a>title:Spark local&amp; stand-alone配置</h2><p>Anaconda On Linux 安装 (单台服务器脚本安装) </p>
+<p>安装上传安装包: 资料中提供的Anaconda3-2021.05-Linux-x86_64.sh文件到Linux服务器上安装位置在 &#x2F;export&#x2F;server；创建虚拟环境 pyspark 基于 python3.8 切换到虚拟环境内</p>
+<p><img src="/../images/27.jpg" alt="在这里插入图片描述"></p>
+<p>spark 安装 建立软连接 </p>
+<p>ln -s &#x2F;export&#x2F;server&#x2F;spark-3.2.0-bin-hadoop3.2 &#x2F;export&#x2F;server&#x2F;spark,添加环境变量</p>
+<p>重新加载环境变量文件 cd &#x2F;export&#x2F;server&#x2F;anaconda3&#x2F;envs&#x2F;pyspark&#x2F;bin&#x2F;进入 pyspark界面</p>
+<p><img src="/../images/28.png" alt="在这里插入图片描述"></p>
+<p>浏览器访问验证： <a target="_blank" rel="noopener" href="http://master:4040/">http://master:4040/</a></p>
+<p><img src="/../images/29.jpg" alt="在这里插入图片描述"></p>
+<p>安装上传安装包:Anaconda3-2021.05-Linux-x86_64.sh文件到Linux服务器上安装（参考 Local模式下 环境变量的配置内容，确保3台都配置.将文件 workers.template 改名为 workers，并配置文件内容将里面的localhost删除.将文件 spark-env.sh.template 改名为 spark-env.sh。在HDFS上创建程序运行历史记录存放的文件夹，同样 conf 文件目录下:</p>
+<p><img src="/../images/30.png" alt="在这里插入图片描述"></p>
+<p>配置 log4j.properties 文件 将文件第 19 行的 log4j.rootCategory&#x3D;INFO, console 改为</p>
+<p>log4j.rootCategory&#x3D;WARN, console （即将INFO 改为 WARN 目的：输出日志, 设置级别为WARN 只输出警告和错误日志，INFO 则为输出所有信息，多数为无用信息）master 节点分发 spark 安装文件夹 到 slave1 和 slave2 上</p>
+<p><img src="/../images/31.png" alt="在这里插入图片描述"></p>
+<p>进入 &#x2F;export&#x2F;server&#x2F;spark&#x2F;sbin 文件目录下</p>
+<p>重新加载环境变量，启动Spark的Master和Worker进程，启动 start-history-server.sh</p>
+<p><img src="/../images/32.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/33.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/34.png" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/" data-id="cl3pxjju10001ycty1y69c5pk" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-test" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/28/test/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T11:58:33.000Z" itemprop="datePublished">2022-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/28/test/">test</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/28/test/" data-id="cl3pu86xp0000p0tyb46qgt2q" data-title="test" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Spark基础环境配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
@@ -57,22 +185,38 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Spark基础环境配置</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>JDK配置<br>上传并解压jdk<br>JDK安装目录重命名为jdk<img src="https://img-blog.csdnimg.cn/d047f0d8212049dfb4c94f118486c8cf.png" alt="在这里插入图片描述">配置环境变量 ，重新加载环境变量文件<br><img src="https://img-blog.csdnimg.cn/fe7f9755a6254f3ea1081974de0a0f36.jpeg" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/d2ea77b8d9ba4b2898763dcdd1665c0b.png" alt="在这里插入图片描述">分发JDK相关文件到node2、3<br>1.jdk相关文件分发<br>scp -r &#x2F;export&#x2F;servers&#x2F;jdk1.8.0_241&#x2F; root@slave1:&#x2F;export&#x2F;servers&#x2F;<br>scp -r &#x2F;export&#x2F;servers&#x2F;jdk1.8.0_241&#x2F; root@slave2:&#x2F;export&#x2F;servers&#x2F;<br>2.分发系统环境变量文件至slave1,slave2<br>scp -r &#x2F;etc&#x2F;profile root@slave1:&#x2F;etc&#x2F;profile<br>scp -r &#x2F;etc&#x2F;profile root@slave2:&#x2F;etc&#x2F;profile<br>Hadoop集群的安装和配置<br>上传Hadoop安装包到node1 &#x2F;export&#x2F;server<br>并解压tar zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br>修改配置文件(进入路径 &#x2F;export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop)<br>hadoop-env.sh<br><img src="https://img-blog.csdnimg.cn/131940e4536a4fb9aec5210de9f67e99.jpeg" alt="在这里插入图片描述"><br>core-site.xml </p>
-<p><img src="https://img-blog.csdnimg.cn/9d92979875ab48d9888afd6bbcbb2dbf.jpeg" alt="在这里插入图片描述"><br>hdfs-site.xml <img src="https://img-blog.csdnimg.cn/9413eb7640df45efb2ba02b724baee99.jpeg" alt="在这里插入图片描述"><br>mapred-site.xml<br><img src="https://img-blog.csdnimg.cn/f7f4d2ff827f4781bab81500f4b65a42.jpeg" alt="在这里插入图片描述"><br>重新加载环境变量文件</p>
-<p><img src="https://img-blog.csdnimg.cn/cacafe1bafd14ff599fa902710475b96.png" alt="在这里插入图片描述"><br>一键启动</p>
-<p><img src="https://img-blog.csdnimg.cn/70b3721584574e968b6f45299fa1d4b5.png" alt="在这里插入图片描述"></p>
+        <p>JDK配置</p>
+<p>上传并解压jdk<br>JDK安装目录重命名为jdk<img src="/../images/1.png" alt="在这里插入图片描述"></p>
+<p>配置环境变量 ，重新加载环境变量文件</p>
+<p><img src="/../images/2.jpg" alt="在这里插入图片描述"><img src="/../images/3.png" alt="在这里插入图片描述"></p>
+<p>分发JDK相关文件到node2、3<br>1.jdk相关文件分发<br>scp -r &#x2F;export&#x2F;servers&#x2F;jdk1.8.0_241&#x2F; root@slave1:&#x2F;export&#x2F;servers&#x2F;<br>scp -r &#x2F;export&#x2F;servers&#x2F;jdk1.8.0_241&#x2F; root@slave2:&#x2F;export&#x2F;servers&#x2F;<br>2.分发系统环境变量文件至slave1,slave2<br>scp -r &#x2F;etc&#x2F;profile root@slave1:&#x2F;etc&#x2F;profile<br>scp -r &#x2F;etc&#x2F;profile root@slave2:&#x2F;etc&#x2F;profile<br>Hadoop集群的安装和配置<br>上传Hadoop安装包到node1 &#x2F;export&#x2F;server<br>并解压tar zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br>修改配置文件(进入路径 &#x2F;export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop)<br>hadoop-env.sh<br><img src="/../images/4.jpg" alt="在这里插入图片描述"><br>core-site.xml </p>
+<p><img src="/../images/5.jpg" alt="在这里插入图片描述"><br>hdfs-site.xml <img src="/../images/6.jpg" alt="在这里插入图片描述"><br>mapred-site.xml<br><img src="/../images/7.jpg" alt="在这里插入图片描述"><br>重新加载环境变量文件</p>
+<p><img src="/../images/8.png" alt="在这里插入图片描述">)<br>一键启动</p>
+<p><img src="/../images/9.png" alt="在这里插入图片描述">)</p>
 <p>输入 jps 查看 </p>
-<p><img src="https://img-blog.csdnimg.cn/5fad0a8c197d42bebe3ad5c6c11aa4bb.png" alt="在这里插入图片描述"><br>Web UI页面验证<br>HDFS集群</p>
-<p><img src="https://img-blog.csdnimg.cn/7566653d270f4385993616a82cff5496.jpeg" alt="在这里插入图片描述"></p>
-<p>YARN集群<br><img src="https://img-blog.csdnimg.cn/b5169d9a7ad04590b530d662cfb8248f.jpeg" alt="在这里插入图片描述"><br>Zookeeper的组件安装配置<br>上传并解压zookeeper<br>建立软连接<br><img src="https://img-blog.csdnimg.cn/e1d26547630741749b53979aaf531410.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/34066863e8804005b2536ca47b2617b0.png" alt="在这里插入图片描述"><br>创建一个zkdata文件</p>
-<p><img src="https://img-blog.csdnimg.cn/f76583be9fec44d5ba4acd790c44ebdc.png" alt="在这里插入图片描述">修改配置文件，添加myid配置，创建zkdatas文件存放myid，内容为1<br><img src="https://img-blog.csdnimg.cn/62c080859918418eac3b4b9a5b46bba2.png" alt="在这里插入图片描述"><br>安装包分发并修改myid的值，建立软连接，node3同理<br><img src="https://img-blog.csdnimg.cn/d11448ab4a4c4d37a20cc129f02a0d37.png" alt="在这里插入图片描述"><br>启动zookeeper服务<br><img src="https://img-blog.csdnimg.cn/0425a726d9474742a14f814762905c80.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/57c262e147914fd0878d6fb9e89af60c.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/d7152f0e7e874ad6a7f77a53f9d408e7.png" alt="在这里插入图片描述"><br>三台主机查看启动状态<br><img src="https://img-blog.csdnimg.cn/d3a8884cf538408e8046eac03465db1f.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/0e2bd36a99ff4042abb568191e93d7d9.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/d35b7e96d4694d97b16cc96080f9ad58.png" alt="在这里插入图片描述"><br>jps查看进程<br><img src="https://img-blog.csdnimg.cn/3e678c8f0a2b491b98e8f977420462cd.jpeg" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/5648219dbef549fba463097379c4235c.jpeg" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/2fee050879aa485e957e96a998f4f362.jpeg" alt="在这里插入图片描述"></p>
+<p><img src="/../images/10.png" alt="在这里插入图片描述"></p>
+<p>Web UI页面验证<br>HDFS集群</p>
+<p><img src="/../images/11.jpg" alt="在这里插入图片描述"></p>
+<p>YARN集群<br><img src="/../images/12.jpg" alt="在这里插入图片描述"><br>Zookeeper的组件安装配置<br>上传并解压zookeeper<br>建立软连接<br><img src="/../images/13.png" alt="在这里插入图片描述"><br><img src="/../images/14.png" alt="在这里插入图片描述"><br>创建一个zkdata文件</p>
+<p><img src="/../images/15.png" alt="在这里插入图片描述">)修改配置文件，添加myid配置，创建zkdatas文件存放myid，内容为1</p>
+<p><img src="/../images/16.png" alt="在这里插入图片描述">)<br>安装包分发并修改myid的值，建立软连接，node3同理<br><img src="/../images/17.png" alt="在这里插入图片描述"><br>启动zookeeper服务<br><img src="/../images/18.png" alt="在这里插入图片描述"><br><img src="/../images/19.png" alt="在这里插入图片描述"><br><img src="/../images/20.png" alt="在这里插入图片描述"><br>三台主机查看启动状态<br><img src="/../images/21.png" alt="在这里插入图片描述"><br><img src="/../images/22.png" alt="在这里插入图片描述"><br><img src="/../images/23.png" alt="在这里插入图片描述"><br>jps查看进程<br><img src="/../images/24.jpg" alt="在这里插入图片描述"><br><img src="/../images/25.jpg" alt="在这里插入图片描述"><img src="/../images/26.jpg" alt="在这里插入图片描述"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="cl3pi2hz60000pgtyg3jvepew" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="cl3ptjm880000egtya6fbciat" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
@@ -110,7 +254,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/27/myfirstblog/" data-id="cl3p799hw0001gwty20585cf9" data-title="myfirstblog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/27/myfirstblog/" data-id="cl3ptjm8e0002egty1alqaxep" data-title="myfirstblog" class="article-share-link">Share</a>
       
       
       
@@ -161,7 +305,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/27/hello-world/" data-id="cl3p799hs0000gwtyf3jr4kzn" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/27/hello-world/" data-id="cl3ptjm8c0001egtyhrmwcahq" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -187,15 +331,23 @@
       <ul>
         
           <li>
-            <a href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">(no title)</a>
+            <a href="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/28/test/">test</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Spark基础环境配置</a>
           </li>
         
           <li>
             <a href="/2022/05/27/myfirstblog/">myfirstblog</a>
-          </li>
-        
-          <li>
-            <a href="/2022/05/27/hello-world/">Hello World</a>
           </li>
         
       </ul>

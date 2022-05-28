@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>myfirstblog | qfl的blog</title>
+  <title>qfl的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -45,33 +45,37 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-myfirstblog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Spark &amp; Yarn配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/05/27/myfirstblog/" class="article-date">
-  <time class="dt-published" datetime="2022-05-27T13:54:53.000Z" itemprop="datePublished">2022-05-27</time>
+    <a href="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T13:25:42.101Z" itemprop="datePublished">2022-05-28</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      myfirstblog
-    </h1>
-  
-
-      </header>
-    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <hr>
+<h2 id="title-Spark-HA-amp-Yarn-配置"><a href="#title-Spark-HA-amp-Yarn-配置" class="headerlink" title="title:Spark HA&amp; Yarn 配置"></a>title:Spark HA&amp; Yarn 配置</h2><p>修改spark-env.sh配置文件,删除<code>SPARK_MASTER_HOST=node1</code>不固定master节点 。将spark-env.sh分发到node2和node3</p>
+<p>scp spark-env.sh node2:&#x2F;export&#x2F;server&#x2F;spark&#x2F;conf&#x2F;</p>
+<p>scp spark-env.sh node3:&#x2F;export&#x2F;server&#x2F;spark&#x2F;conf&#x2F;，关闭当前StandAlone集群(之前需开启配置完成的zookeeper)在node1上 启动一个master 和全部worker，cd &#x2F;export&#x2F;server&#x2F;spark&#x2F;sbin&#x2F;start-all.sh</p>
+<p><img src="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/Users\柒柒\AppData\Roaming\Typora\typora-user-images\1653744911567.png" alt="1653744911567"></p>
+<p>查看状态：node1:8080端口状态为ALIVE，关闭node1的master进程，node2master启用其状态切换为ALIVE</p>
+<p>保证 HADOOP_CONF_和 DIR_YARN_CONF_DIR 已经配置在 spark-env.sh 和环境变量中</p>
+<p> 链接到YARN中（注: 交互式环境 pyspark 和 spark-shell 无法运行 cluster模式）</p>
+<p><em><strong>*client*</strong></em> <em><strong>*模式测试*</strong></em> </p>
+<h6 id><a href="#" class="headerlink" title></a><img src="/../images/37.png" alt="在这里插入图片描述"></h6><p><em><strong>*cluster 模式测试*</strong></em></p>
+<p><img src="/../images/38.png" alt="在这里插入图片描述"></p>
+<p><em><strong>*通过web UI查看任务运行状态*</strong></em></p>
+<p><img src="/../images/39.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/40.png" alt="在这里插入图片描述"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/27/myfirstblog/" data-id="cl3ptjm8e0002egty1alqaxep" data-title="myfirstblog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/" data-id="cl3pxjjtv0000ycty4ail5faz" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -81,19 +85,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Spark基础环境配置
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/05/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title"></div>
     </a>
   
 </nav>

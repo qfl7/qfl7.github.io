@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>myfirstblog | qfl的blog</title>
+  <title>qfl的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -45,33 +45,43 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-myfirstblog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Spark local&amp; stand-alone配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/05/27/myfirstblog/" class="article-date">
-  <time class="dt-published" datetime="2022-05-27T13:54:53.000Z" itemprop="datePublished">2022-05-27</time>
+    <a href="/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T12:19:40.953Z" itemprop="datePublished">2022-05-28</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      myfirstblog
-    </h1>
-  
-
-      </header>
-    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <hr>
+<h2 id="title-Spark-local-amp-stand-alone配置"><a href="#title-Spark-local-amp-stand-alone配置" class="headerlink" title="title:Spark local&amp; stand-alone配置"></a>title:Spark local&amp; stand-alone配置</h2><p>Anaconda On Linux 安装 (单台服务器脚本安装) </p>
+<p>安装上传安装包: 资料中提供的Anaconda3-2021.05-Linux-x86_64.sh文件到Linux服务器上安装位置在 &#x2F;export&#x2F;server；创建虚拟环境 pyspark 基于 python3.8 切换到虚拟环境内</p>
+<p><img src="/../images/27.jpg" alt="在这里插入图片描述"></p>
+<p>spark 安装 建立软连接 </p>
+<p>ln -s &#x2F;export&#x2F;server&#x2F;spark-3.2.0-bin-hadoop3.2 &#x2F;export&#x2F;server&#x2F;spark,添加环境变量</p>
+<p>重新加载环境变量文件 cd &#x2F;export&#x2F;server&#x2F;anaconda3&#x2F;envs&#x2F;pyspark&#x2F;bin&#x2F;进入 pyspark界面</p>
+<p><img src="/../images/28.png" alt="在这里插入图片描述"></p>
+<p>浏览器访问验证： <a target="_blank" rel="noopener" href="http://master:4040/">http://master:4040/</a></p>
+<p><img src="/../images/29.jpg" alt="在这里插入图片描述"></p>
+<p>安装上传安装包:Anaconda3-2021.05-Linux-x86_64.sh文件到Linux服务器上安装（参考 Local模式下 环境变量的配置内容，确保3台都配置.将文件 workers.template 改名为 workers，并配置文件内容将里面的localhost删除.将文件 spark-env.sh.template 改名为 spark-env.sh。在HDFS上创建程序运行历史记录存放的文件夹，同样 conf 文件目录下:</p>
+<p><img src="/../images/30.png" alt="在这里插入图片描述"></p>
+<p>配置 log4j.properties 文件 将文件第 19 行的 log4j.rootCategory&#x3D;INFO, console 改为</p>
+<p>log4j.rootCategory&#x3D;WARN, console （即将INFO 改为 WARN 目的：输出日志, 设置级别为WARN 只输出警告和错误日志，INFO 则为输出所有信息，多数为无用信息）master 节点分发 spark 安装文件夹 到 slave1 和 slave2 上</p>
+<p><img src="/../images/31.png" alt="在这里插入图片描述"></p>
+<p>进入 &#x2F;export&#x2F;server&#x2F;spark&#x2F;sbin 文件目录下</p>
+<p>重新加载环境变量，启动Spark的Master和Worker进程，启动 start-history-server.sh</p>
+<p><img src="/../images/32.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/33.png" alt="在这里插入图片描述"></p>
+<p><img src="/../images/34.png" alt="在这里插入图片描述"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/27/myfirstblog/" data-id="cl3ptjm8e0002egty1alqaxep" data-title="myfirstblog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/28/Spark%20local&%20stand-alone%E9%85%8D%E7%BD%AE/" data-id="cl3pxjju10001ycty1y69c5pk" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -81,19 +91,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/05/28/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/05/28/Spark%20&%20Yarn%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Spark基础环境配置
+          (no title)
         
       </div>
     </a>
   
   
-    <a href="/2022/05/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/05/28/test/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">test</div>
     </a>
   
 </nav>
